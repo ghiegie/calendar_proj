@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sample_calendar/logic/calendar_logic.dart';
+import 'package:sample_calendar/models/date_model.dart';
 
 class CalendarContent extends StatelessWidget {
   const CalendarContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: THIS IS A STATE THAT NEED TO BE MANAGED USING RIVERPOD
-    var date = DateTime.now();
-
-    int month = date.month;
-    int year = date.year;
-
     return Expanded(child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints1) {
       return Column(
@@ -20,8 +16,11 @@ class CalendarContent extends StatelessWidget {
             height: constraints1.maxHeight * 0.05,
             width: constraints1.maxWidth,
           ),
-          WeekArr(
-              arr: return_2D_list(return_no_of_days(month, year), DateTime.utc(year, month, 1))),
+          Consumer<DateModel>(
+            builder: (context, date, child) => WeekArr(
+              arr: return_2D_list(return_no_of_days(date.month, date.year), DateTime.utc(date.year, date.month, 1))
+            ),
+          ),
         ],
       );
     }));
@@ -66,7 +65,7 @@ class WeekHeader extends StatelessWidget {
 }
 
 class WeekArr extends StatelessWidget {
-  final List<List<int>> arr;
+  final List<List<(int, bool)>> arr;
 
   const WeekArr({super.key, required this.arr});
 
@@ -98,7 +97,7 @@ class WeekArr extends StatelessWidget {
 class Week extends StatelessWidget {
   final double wkHeight;
   final Color wkColor;
-  final List<int> wkArr;
+  final List<(int, bool)> wkArr;
 
   const Week(
       {super.key,
@@ -118,7 +117,7 @@ class Week extends StatelessWidget {
               Day(
                 dayWidth: constraints1.maxWidth / 7.0,
                 dayColor: wkColor,
-                dayNum: wkArr[i],
+                dayState: wkArr[i],
                 dayHeight: constraints1.maxHeight,
               )
           ],
@@ -131,14 +130,14 @@ class Week extends StatelessWidget {
 class Day extends StatelessWidget {
   final double dayWidth;
   final Color dayColor;
-  final int dayNum;
+  final (int, bool) dayState;
   final double dayHeight;
 
   const Day(
       {super.key,
       required this.dayWidth,
       required this.dayColor,
-      required this.dayNum,
+      required this.dayState,
       required this.dayHeight});
 
   @override
@@ -146,13 +145,17 @@ class Day extends StatelessWidget {
     return Container(
       width: dayWidth,
       height: dayHeight,
+      padding: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: dayColor,
+        color: dayState.$2 ? Colors.white70 : Colors.black38,
         border: Border.all(
           width: 0.5,
         ),
       ),
-      child: Center(child: Text(dayNum.toString())),
+      child: Text(
+        dayState.$1.toString(),
+        textDirection: TextDirection.rtl,
+      ),
     );
   }
 }

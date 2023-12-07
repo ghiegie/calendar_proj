@@ -1,3 +1,5 @@
+import 'package:sample_calendar/models/date_model.dart';
+
 int return_no_of_days(int month, int year) {
   var is_leap = false;
 
@@ -27,34 +29,73 @@ int return_no_of_days(int month, int year) {
   }
 }
 
-List<List<int>> return_2D_list(int dayCount, DateTime date) {
-  List<List<int>> to_ret = List<List<int>>.empty(growable: true);
+List<List<(int, bool)>> return_2D_list(int dayCount, DateTime date) {
+  List<List<(int, bool)>> to_ret = List<List<(int, bool)>>.empty(growable: true);
   int wkDay = date.weekday == 7 ? 0 : date.weekday;
+  (int, int) wkDayPastMonth = () {
+    int year = date.month == 1 ? date.year - 1 : date.year;
+    int month = date.month == 1 ? 12 : date.month - 1;
+    int day = return_no_of_days(month, year);
+    int result = DateTime.utc(year, month, day).weekday;
+    return (result == 7 ? 0 : DateTime.utc(year, month, day).weekday, return_no_of_days(month, year));
+  }();
 
   int startCount = 1;
-
-  for (int i = 0; i < 6; ++i) {
-    List<int> week = List<int>.empty(growable: true);
-    for (int j = 0; j < 7; ++j) {
-      if (startCount <= dayCount) {
-        if (i == 0) {
-          if (j == wkDay) {
-            week.add(startCount);
+  int preceedingCount = wkDayPastMonth.$2 - wkDayPastMonth.$1;
+  int proceedingCount = 1;
+  for (int i = 0; i < 6; ++i) { // for every week
+    List<(int, bool)> week = List<(int, bool)>.empty(growable: true); // create an array of 7 days
+    for (int j = 0; j < 7; ++j) { // for every day
+      if (startCount <= dayCount) { // is the startcount not greater than daycount
+        if (i == 0) { // is it the first week
+          if (j == wkDay) { // is it the 1st day of the month
+            week.add((startCount, true));
             ++wkDay;
             ++startCount;
           } else {
-            week.add(0);
+            week.add((preceedingCount, false)); 
+            ++preceedingCount;
           }
-        } else {
-          week.add(startCount);
+        } else { // is it not the first week
+          week.add((startCount, true)); 
           ++startCount;
         }
-      } else {
-        week.add(0);
+      } else { // if it startcount is greater than daycount
+        week.add((proceedingCount, false));
+        ++proceedingCount;
       }
     }
     to_ret.add(week);
   }
 
   return to_ret;
+}
+
+String month_name(Month month) {
+  switch (month) {
+    case Month.January:
+      return "January";
+    case Month.February:
+      return "February";
+    case Month.March:
+      return "March";
+    case Month.April:
+      return "April";
+    case Month.May:
+      return "May";
+    case Month.June:
+      return "June";
+    case Month.July:
+      return "July";
+    case Month.August:
+      return "August";
+    case Month.September:
+      return "September";
+    case Month.October:
+      return "October";
+    case Month.November:
+      return "November";
+    case Month.December:
+      return "December";
+  }
 }
