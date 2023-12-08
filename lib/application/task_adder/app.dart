@@ -6,30 +6,23 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text("Sample"),
-              Container(
-                width: 150,
-                height: 50,
-                child: TextField()
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text("Another Sample"),
-              Container(
-                width: 150,
-                height: 50,
-                child: TextField()
-              ),
-            ],
-          ),
-        ],
-      ),
+      child: LayoutBuilder(
+        builder: (),
+      ), 
+    );
+  }
+}
+
+class TaskNameWidget extends StatelessWidget {
+  final double height;
+
+  const TaskNameWidget({super.key, required this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      color: Colors.redAccent
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:sample_calendar/application/task_adder/app.dart';
-//import 'package:sample_calendar/application/calendar/app.dart';
+//import 'package:sample_calendar/application/task_adder/app.dart';
+import 'package:sample_calendar/application/calendar/app.dart';
 import 'package:window_size/window_size.dart';
 
 void main() {
