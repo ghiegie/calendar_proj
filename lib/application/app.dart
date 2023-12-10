@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_calendar/application/calendar/appbar.dart';
-import 'package:sample_calendar/application/calendar/content.dart';
+import 'package:sample_calendar/application/appbar.dart';
+import 'package:sample_calendar/application/content.dart';
 import 'package:sample_calendar/models/date_model.dart';
 
 class Application extends StatelessWidget {
@@ -17,7 +17,7 @@ class Application extends StatelessWidget {
             child: Column(
               children: [
                 CalendarAppBar(barHeight: 50, barWidth: constraints1.maxWidth,),
-                CalendarContent(),
+                const CalendarContent(),
               ],
             ),
           );
