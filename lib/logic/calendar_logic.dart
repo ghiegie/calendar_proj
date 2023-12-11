@@ -1,4 +1,4 @@
-import 'package:sample_calendar/models/date_model.dart';
+import 'package:flutter_guis/models/date_model.dart';
 
 int return_no_of_days(int month, int year) {
   var is_leap = () {

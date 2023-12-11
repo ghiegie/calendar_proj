@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_calendar/logic/calendar_logic.dart';
-import 'package:sample_calendar/models/date_model.dart';
+import 'package:flutter_guis/logic/calendar_logic.dart';
+import 'package:flutter_guis/models/date_model.dart';
 
 class CalendarAppBar extends StatelessWidget {
   final double barHeight;
