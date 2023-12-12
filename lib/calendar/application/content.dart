@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_guis/calendar/logic/calendar_logic.dart';
+import 'package:flutter_guis/calendar/models/date_model.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_guis/logic/calendar_logic.dart';
-import 'package:flutter_guis/models/date_model.dart';
 
 class CalendarContent extends StatelessWidget {
   const CalendarContent({super.key});
